@@ -4,75 +4,60 @@
 <meta charset="UTF-8">
 <title>🧮 Calculadora de Surebet</title>
 <style>
+/* ===================== MOBILE-FIRST ===================== */
 body{
     background:#0f1115;
     font-family:Arial, sans-serif;
     color:#fff;
-    padding:30px;
+    padding:15px;
     margin:0;
 }
 .wrapper{
     display:grid;
-    grid-template-columns:2fr 1.3fr;
-    gap:20px;
+    grid-template-columns:1fr; /* mobile: uma coluna só */
+    gap:15px;
 }
 .container{
     background:#161a20;
     border-radius:14px;
-    padding:20px;
+    padding:15px;
 }
-h1,h2{color:greenyellow;}
-input,select,textarea{width:100%; background:#20242c; border:none; border-radius:8px; padding:8px; color:#fff; box-sizing:border-box;}
-.campo-jogo{
-    margin-bottom:20px;
-    display:flex;
-    flex-direction:column;
+h1,h2{color:greenyellow; font-size:20px; margin-bottom:10px;}
+input,select,textarea{
+    width:100%;
+    background:#20242c;
+    border:none;
+    border-radius:8px;
+    padding:10px;
+    color:#fff;
+    margin-bottom:10px;
+    box-sizing:border-box;
 }
 .campo-jogo label{
-    margin-bottom:5px;
     font-weight:bold;
     font-size:14px;
     color:#4cff4c;
-}
-.linha{
-    display:grid;
-    grid-template-columns:
-        1.3fr
-        1.1fr
-        0.7fr
-        0.7fr
-        0.9fr
-        0.9fr
-        1.2fr
-        40px;
-    gap:12px;
-    margin-bottom:12px;
-}
-.linha select, .linha input{
+    margin-bottom:5px;
     display:block;
 }
-.linha .mercado,
-.linha .odd,
-.linha .aumento,
-.linha .tipo {
-    margin-left:4px;
+.linha{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    margin-bottom:12px;
+    border:1px solid #333;
+    border-radius:10px;
+    padding:10px;
+    background:#20242c;
 }
 .lucro-linha{
-    background:#20242c;
+    background:#161a20;
     border-radius:8px;
     padding:8px;
     text-align:center;
     font-weight:bold;
     color:#4cff4c;
-    font-size:13px;
-}
-.freebet-check{
-    display:inline-flex;
-    align-items:center;
-    padding:10px 15px;
-    background:#20242c;
-    border-radius:8px;
-    margin:10px 0 15px 0;
+    font-size:14px;
 }
 button{
     background:greenyellow;
@@ -80,28 +65,37 @@ button{
     border-radius:8px;
     cursor:pointer;
     font-weight:bold;
-    padding:8px;
+    padding:10px;
+    margin-top:5px;
+    font-size:14px;
 }
-.remove{background:#ff5c5c}
-.add{margin-top:15px}
+.remove{background:#ff5c5c;}
+.add{margin-top:10px;}
 .resultado{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:1fr; /* mobile: empilhado */
     gap:10px;
     margin-top:15px;
 }
 .box{
     background:#20242c;
-    padding:10px;
+    padding:12px;
     border-radius:8px;
     text-align:center;
 }
 textarea{
-    height:380px;
+    height:220px;
     resize:none;
 }
 .copy{margin-top:10px;width:100%;}
-
+.freebet-check{
+    display:flex;
+    align-items:center;
+    padding:8px;
+    background:#20242c;
+    border-radius:8px;
+    margin:10px 0 15px 0;
+}
 .responsabilidade-container{
     margin-top:4px;
     font-size:13px;
@@ -110,50 +104,29 @@ textarea{
     display:none;
 }
 
-/* ===================== RESPONSIVO ===================== */
-@media (max-width: 900px) {
-    .wrapper {
-        grid-template-columns: 1fr; /* só uma coluna no celular */
-        padding: 15px;
+/* ===================== DESKTOP ===================== */
+@media (min-width: 901px) {
+    .wrapper{grid-template-columns:2fr 1.3fr; gap:20px;}
+    .linha{
+        display:grid;
+        grid-template-columns:
+            1.3fr
+            1.1fr
+            0.7fr
+            0.7fr
+            0.9fr
+            0.9fr
+            1.2fr
+            40px;
+        gap:12px;
+        padding:0;
+        border:none;
+        background:none;
     }
-
-    .linha {
-        grid-template-columns: 1fr; /* cada linha vira bloco vertical */
-        gap: 8px;
-    }
-
-    .linha input,
-    .linha select,
-    .linha .lucro-linha,
-    .linha button,
-    .linha .responsabilidade-container {
-        width: 100%;
-        margin: 4px 0;
-    }
-
-    .resultado {
-        grid-template-columns: 1fr; /* boxes do resultado ficam empilhados */
-        gap: 10px;
-    }
-
-    textarea {
-        height: 250px; /* ajusta altura pra tela menor */
-    }
-
-    .freebet-check {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 8px;
-    }
-
-    button {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    h1, h2 {
-        font-size: 20px;
-    }
+    .resultado{grid-template-columns:repeat(3,1fr);}
+    textarea{height:380px;}
+    h1,h2{font-size:26px;}
+    button{font-size:14px; padding:8px;}
 }
 </style>
 </head>
@@ -165,12 +138,12 @@ textarea{
 
 <div class="campo-jogo">
     <label for="jogo">⚽ Jogo</label>
-    <input id="jogo" class="campo-jogo" placeholder="Digite o jogo">
+    <input id="jogo" placeholder="Digite o jogo">
 </div>
 
 <div class="campo-jogo">
     <label for="dataJogo">📅 Data do Jogo</label>
-    <input type="date" id="dataJogo" class="campo-jogo">
+    <input type="date" id="dataJogo">
 </div>
 
 <div class="campo-jogo">
@@ -180,7 +153,6 @@ textarea{
 </div>
 
 <div id="linhas"></div>
-
 <button class="add" onclick="addLinha()">➕ Adicionar Proteção</button>
 
 <div class="resultado">
@@ -200,9 +172,9 @@ textarea{
 </div>
 
 <script>
+// ===================== FUNÇÕES =====================
 function n(v){ return !v?0:parseFloat(v.replace(/\./g,'').replace(',','.')) || 0; }
 function m(v){ return v.toLocaleString('pt-BR',{minimumFractionDigits:2}); }
-
 function carregarCasas(){ return JSON.parse(localStorage.getItem("casas")) || ["Bet365","SportingBet","Pinnacle"]; }
 
 function atualizarSelectsCasas(){ 
@@ -271,7 +243,7 @@ function addLinha(principal=false){
     }
 }
 
-// ================= CÁLCULOS ======================
+// ===================== CÁLCULOS ======================
 function calc(){
     const linhas=document.querySelectorAll(".linha");
     if(linhas.length<2) return;
