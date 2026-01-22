@@ -9,6 +9,7 @@ body{
     font-family:Arial, sans-serif;
     color:#fff;
     padding:30px;
+    margin:0;
 }
 .wrapper{
     display:grid;
@@ -21,7 +22,7 @@ body{
     padding:20px;
 }
 h1,h2{color:greenyellow;}
-input,select,textarea{width:100%; background:#20242c; border:none; border-radius:8px; padding:8px; color:#fff;}
+input,select,textarea{width:100%; background:#20242c; border:none; border-radius:8px; padding:8px; color:#fff; box-sizing:border-box;}
 .campo-jogo{
     margin-bottom:20px;
     display:flex;
@@ -107,6 +108,52 @@ textarea{
     color:#ffb84c;
     font-weight:bold;
     display:none;
+}
+
+/* ===================== RESPONSIVO ===================== */
+@media (max-width: 900px) {
+    .wrapper {
+        grid-template-columns: 1fr; /* só uma coluna no celular */
+        padding: 15px;
+    }
+
+    .linha {
+        grid-template-columns: 1fr; /* cada linha vira bloco vertical */
+        gap: 8px;
+    }
+
+    .linha input,
+    .linha select,
+    .linha .lucro-linha,
+    .linha button,
+    .linha .responsabilidade-container {
+        width: 100%;
+        margin: 4px 0;
+    }
+
+    .resultado {
+        grid-template-columns: 1fr; /* boxes do resultado ficam empilhados */
+        gap: 10px;
+    }
+
+    textarea {
+        height: 250px; /* ajusta altura pra tela menor */
+    }
+
+    .freebet-check {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    h1, h2 {
+        font-size: 20px;
+    }
 }
 </style>
 </head>
@@ -224,7 +271,7 @@ function addLinha(principal=false){
     }
 }
 
-//calculossssssssss
+// ================= CÁLCULOS ======================
 function calc(){
     const linhas=document.querySelectorAll(".linha");
     if(linhas.length<2) return;
@@ -263,15 +310,12 @@ function calc(){
             l.querySelector(".valor").value = m(stake);
             l.querySelector(".responsabilidade-container").style.display="none";
         } else {
-            //calculo resp 
             const stakeLay = retornoAlvo / (odd - com);
             const liability = stakeLay * (odd - 1)
             investimento += liability;
             l.querySelector(".valor").value = m(stakeLay);
             l.querySelector(".responsabilidade").innerText = m(liability);
             l.querySelector(".responsabilidade-container").style.display="block";
-
-            
         }
     });
 
@@ -332,12 +376,8 @@ function salvarAposta(){
     .catch(()=>alert("❌ Erro ao salvar aposta"));
 }
 
-
 addLinha(true);
 addLinha();
-
-///const user = JSON.parse(localStorage.getItem("user"));
-///if(!user) location.href="login.html";///
 </script>
 </body>
 </html>
